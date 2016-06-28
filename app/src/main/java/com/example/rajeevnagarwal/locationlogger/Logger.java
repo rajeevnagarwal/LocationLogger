@@ -28,7 +28,16 @@ public class Logger extends AppCompatActivity implements LocationListener{
         setContentView(R.layout.activity_logger);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        txt1 = (TextView)findViewById(R.id.txt1);
+        txt2 = (TextView)findViewById(R.id.txt2);
+        txt3 = (TextView)findViewById(R.id.txt3);
+        txt4 = (TextView)findViewById(R.id.txt4);
+        txt5 = (TextView)findViewById(R.id.txt5);
+        txt1.setText("");
+        txt2.setText("");
+        txt3.setText("");
+        txt4.setText("");
+        txt5.setText("");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,17 +47,22 @@ public class Logger extends AppCompatActivity implements LocationListener{
             }
         });
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria,false);
+        provider = locationManager.GPS_PROVIDER;
         if(provider!=null&&!provider.equals(""))
         {
             try {
+                locationManager.requestLocationUpdates(provider, 0, 0, this);
                 Location location = locationManager.getLastKnownLocation(provider);
-                locationManager.requestLocationUpdates(provider, 20000, 1, this);
+
                 if (location != null) {
                     onLocationChanged(location);
                 } else {
-                    Toast.makeText(getBaseContext(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
+                    txt1.setText("0 kms from Pidilite Industries Limited");
+                    txt2.setText("0 kms from Andheri Metro Station");
+                    txt3.setText("0 kms from Shoppers Stop Andheri West");
+                    txt4.setText("0 kms from AWHO, Sandeep Vihar");
+                    txt5.setText("0 kms from Inox Forum Value Mall");
+
 
                 }
             }
