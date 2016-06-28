@@ -1,6 +1,8 @@
 package com.example.rajeevnagarwal.locationlogger;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -8,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -47,13 +50,12 @@ public class Logger extends AppCompatActivity implements LocationListener{
             }
         });
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        provider = locationManager.GPS_PROVIDER;
-        if(provider!=null&&!provider.equals(""))
+
+       /*if(provider!=null&&!provider.equals(""))*/
         {
             try {
-                locationManager.requestLocationUpdates(provider, 0, 0, this);
-                Location location = locationManager.getLastKnownLocation(provider);
-
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,2000,0,this);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if (location != null) {
                     onLocationChanged(location);
                 } else {
@@ -71,8 +73,8 @@ public class Logger extends AppCompatActivity implements LocationListener{
                 e.printStackTrace();
             }
         }
-        else
-            Toast.makeText(getBaseContext(),"No provider found",Toast.LENGTH_SHORT).show();
+        /*else
+            Toast.makeText(getBaseContext(),"No provider found",Toast.LENGTH_SHORT).show();*/
     }
 
     @Override
